@@ -221,7 +221,7 @@ function submitExam(){
         JSON.stringify(answers)
     );
 
-    window.location.href = "result.html";
+    window.location.href = "thankyou.html";
 
 }
 document.querySelector(".submit").addEventListener("click",showSummary);
