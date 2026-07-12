@@ -272,21 +272,17 @@ async function submitExam(){
 
     }
 
+   try{
+
     await addDoc(collection(db,"responses"),{
 
-        candidate:localStorage.getItem("studentName"),
-
-        answers:answers,
-
-        score:score,
-
-        correct:correct,
-
-        wrong:wrong,
-
-        notAttempted:notAttempted,
-
-        submittedAt:new Date()
+        candidate: localStorage.getItem("studentName"),
+        answers: answers,
+        score: score,
+        correct: correct,
+        wrong: wrong,
+        notAttempted: notAttempted,
+        submittedAt: new Date()
 
     });
 
@@ -296,5 +292,71 @@ async function submitExam(){
     );
 
     window.location.href="thankyou.html";
+
+}
+catch(error){
+
+    console.log(error);
+    alert("Failed to save response.");
+
+}
+
+document.querySelector(".submit").addEventListener("click", showSummary);
+
+function showSummary(){
+
+    let answered = 0;
+    let notAnswered = 0;
+    let reviewCount = 0;
+    let notVisited = 0;
+
+    for(let i=0;i<questions.length;i++){
+
+        if(!visited[i]){
+
+            notVisited++;
+
+        }
+
+        else if(review[i]){
+
+            reviewCount++;
+
+        }
+
+        else if(answers[i]!=null){
+
+            answered++;
+
+        }
+
+        else{
+
+            notAnswered++;
+
+        }
+
+    }
+
+    let message =
+`📋 TEST SUMMARY
+
+✅ Answered : ${answered}
+
+❌ Not Answered : ${notAnswered}
+
+🟣 Marked for Review : ${reviewCount}
+
+⚪ Not Visited : ${notVisited}
+
+---------------------------------
+
+Submit the test?`;
+
+    if(confirm(message)){
+
+        submitExam();
+
+    }
 
 }
