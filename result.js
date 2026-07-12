@@ -1,3 +1,4 @@
+import { db, collection, addDoc } from "./firebase.js";
 let student = localStorage.getItem("studentName");
 
 let answers = JSON.parse(localStorage.getItem("answers"));
@@ -48,3 +49,40 @@ document.getElementById("percentage").innerHTML =
 
 document.getElementById("notAttempted").innerHTML =
 "⏭️ Not Attempted : " + notAttempted;
+saveResult();
+
+async function saveResult(){
+
+    try{
+
+        await addDoc(collection(db,"responses"),{
+
+            candidate: student,
+
+            score: score,
+
+            correct: correct,
+
+            wrong: wrong,
+
+            notAttempted: notAttempted,
+
+            percentage: ((score/(questions.length*4))*100).toFixed(2),
+
+            answers: answers,
+
+            submittedAt: new Date()
+
+        });
+
+        console.log("Result Saved!");
+
+    }
+
+    catch(error){
+
+        console.log(error);
+
+    }
+
+}
