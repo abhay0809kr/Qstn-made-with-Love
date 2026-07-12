@@ -358,5 +358,4 @@ Submit the test?`;
         submitExam();
 
     }
-
-}
+}};
