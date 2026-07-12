@@ -1,0 +1,219 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.login-box{
+
+    width:420px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:0px 0px 30px rgba(0,0,0,.3);
+
+}
+
+.login-box h1{
+
+    margin-bottom:15px;
+
+}
+
+.login-box h3{
+
+    color:gray;
+
+    margin-bottom:30px;
+
+}
+
+input{
+
+    width:100%;
+
+    padding:15px;
+
+    font-size:18px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    margin-bottom:20px;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    font-size:18px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    background:#1d4ed8;
+
+}
+.exam-container{
+
+width:90%;
+
+margin:auto;
+
+margin-top:30px;
+
+background:white;
+
+padding:25px;
+
+border-radius:10px;
+
+}
+
+.top-bar{
+
+display:flex;
+
+justify-content:space-between;
+
+font-weight:bold;
+
+margin:15px 0;
+
+}
+
+.question-box{
+
+margin-top:20px;
+
+}
+
+.options{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+.options label{
+
+padding:10px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+cursor:pointer;
+
+}
+
+.buttons{
+
+display:flex;
+
+justify-content:space-between;
+
+margin:30px 0;
+
+}
+
+.palette{
+
+margin-top:20px;
+
+}
+
+#numbers{
+
+display:grid;
+
+grid-template-columns:repeat(5,50px);
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+.number{
+
+width:45px;
+
+height:45px;
+
+background:#e5e7eb;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+border-radius:8px;
+
+font-weight:bold;
+
+}
+
+.submit{
+
+margin-top:30px;
+
+background:red;
+
+}
+#numbers{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+.qbtn{
+    height:45px;
+    border:none;
+    border-radius:8px;
+    background:#ddd;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.qbtn:hover{
+    background:#aaa;
+}
