@@ -1,3 +1,30 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+const firebaseConfig = {
+
+apiKey: "AIzaSyBk_pqsoq35fuS8dp2TNPM7sXzf6oBewfU",
+
+authDomain: "qstn-made-with-love.firebaseapp.com",
+
+projectId: "qstn-made-with-love",
+
+storageBucket: "qstn-made-with-love.firebasestorage.app",
+
+messagingSenderId: "107602697659",
+
+appId: "1:107602697659:web:8a48260bba48b636bdb89e"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
 let currentQuestion = 0;
 let answers = new Array(questions.length).fill(null);
 let review = new Array(questions.length).fill(false);
@@ -205,7 +232,7 @@ document.getElementById("reviewBtn").addEventListener("click",function(){
     }
 
 });
-function submitExam(){
+async function submitExam(){
 
     let selected =
     document.querySelector("input[name='option']:checked");
@@ -216,70 +243,58 @@ function submitExam(){
 
     }
 
-    localStorage.setItem(
-        "answers",
-        JSON.stringify(answers)
-    );
-
-    window.location.href = "thankyou.html";
-
-}
-document.querySelector(".submit").addEventListener("click",showSummary);
-
-function showSummary(){
-
-    let answered = 0;
-    let notAnswered = 0;
-    let reviewCount = 0;
-    let notVisited = 0;
+    let score = 0;
+    let correct = 0;
+    let wrong = 0;
+    let notAttempted = 0;
 
     for(let i=0;i<questions.length;i++){
 
-        if(!visited[i]){
+        if(answers[i]==null){
 
-            notVisited++;
-
-        }
-
-        else if(review[i]){
-
-            reviewCount++;
+            notAttempted++;
 
         }
 
-        else if(answers[i]!=null){
+        else if(Number(answers[i])===questions[i].answer){
 
-            answered++;
+            correct++;
+
+            score += 4;
 
         }
 
         else{
 
-            notAnswered++;
+            wrong++;
 
         }
 
     }
 
-    let message =
-`📋 TEST SUMMARY
+    await addDoc(collection(db,"responses"),{
 
-✅ Answered : ${answered}
+        candidate:localStorage.getItem("studentName"),
 
-❌ Not Answered : ${notAnswered}
+        answers:answers,
 
-🟣 Marked for Review : ${reviewCount}
+        score:score,
 
-⚪ Not Visited : ${notVisited}
+        correct:correct,
 
-----------------------------
+        wrong:wrong,
 
-Do you want to submit the test?`;
+        notAttempted:notAttempted,
 
-    if(confirm(message)){
+        submittedAt:new Date()
 
-        submitExam();
+    });
 
-    }
+    localStorage.setItem(
+        "answers",
+        JSON.stringify(answers)
+    );
+
+    window.location.href="thankyou.html";
 
 }
