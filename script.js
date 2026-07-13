@@ -273,7 +273,10 @@ async function submitExam(){
     }
 
    try{
+const btn = document.querySelector(".submit");
 
+btn.disabled = true;
+btn.innerHTML = "⏳ Submitting...";
     await addDoc(collection(db,"responses"),{
 
         candidate: localStorage.getItem("studentName"),
@@ -296,8 +299,8 @@ async function submitExam(){
 }
 catch(error){
 
-    console.log(error);
-    alert("Failed to save response.");
+    console.error(error);
+    alert(error.message);
 
 }
 
@@ -313,7 +316,7 @@ function showSummary(){
     let reviewCount = 0;
     let notVisited = 0;
 
-    for(let i=0;i<questions.length;i++){
+    for(let i = 0; i < questions.length; i++){
 
         if(!visited[i]){
 
@@ -327,7 +330,7 @@ function showSummary(){
 
         }
 
-        else if(answers[i]!=null){
+        else if(answers[i] != null){
 
             answered++;
 
@@ -338,6 +341,8 @@ function showSummary(){
             notAnswered++;
 
         }
+
+    }   // <-- IMPORTANT: for loop ends here
 
     let message =
 `📋 TEST SUMMARY
@@ -359,4 +364,63 @@ Submit the test?`;
         submitExam();
 
     }
-}}
+
+}
+window.viewResponse = async function(id){
+
+    const { getDoc, doc } = await import(
+        "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js"
+    );
+
+    const snap = await getDoc(doc(db,"responses",id));
+
+    const data = snap.data();
+
+    let text = "";
+
+    text += "Candidate : " + data.candidate + "\n\n";
+
+    text += "Score : " + data.score + "\n\n";
+
+    text += "----------------------------------\n\n";
+
+    for(let i=0;i<data.answers.length;i++){
+
+        let student = data.answers[i];
+
+        let correct = questions[i].answer;
+
+        text +=
+`Question ${i+1}
+
+Student Answer : ${student==null?"Not Attempted":student}
+
+Correct Answer : ${correct}
+
+`;
+
+        if(student==null){
+
+            text += "⏭️ Not Attempted";
+
+        }
+
+        else if(Number(student)==correct){
+
+            text += "✅ Correct";
+
+        }
+
+        else{
+
+            text += "❌ Wrong";
+
+        }
+
+        text += "\n\n----------------------------\n\n";
+
+    }
+
+    alert(text);
+
+}

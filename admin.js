@@ -48,10 +48,10 @@ async function loadResponses(){
             <td>${new Date(data.submittedAt.seconds*1000).toLocaleString()}</td>
 
             <td>
-                <button onclick="alert('Coming Soon 😎')">
-                View
-                </button>
-            </td>
+    <button onclick="viewResponse('${doc.id}')">
+        👁 View
+    </button>
+</td>
 
         </tr>
         `;
