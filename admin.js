@@ -45,7 +45,11 @@ async function loadResponses(){
 
             <td>${data.notAttempted}</td>
 
-            <td>${new Date(data.submittedAt.seconds*1000).toLocaleString()}</td>
+            <td>${
+    data.submittedAt
+        ? data.submittedAt.toDate().toLocaleString()
+        : "N/A"
+}</td>
 
             <td>
     <button onclick="viewResponse('${doc.id}')">
@@ -57,5 +61,10 @@ async function loadResponses(){
         `;
 
     });
+
+}
+window.viewResponse = async function(id){
+
+    alert("View clicked!\n\nDocument ID:\n" + id);
 
 }
