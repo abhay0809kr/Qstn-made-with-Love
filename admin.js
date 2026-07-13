@@ -65,6 +65,24 @@ async function loadResponses(){
 }
 window.viewResponse = async function(id){
 
-    alert("View clicked!\n\nDocument ID:\n" + id);
+    const { doc, getDoc } = await import(
+        "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js"
+    );
+
+    const snap = await getDoc(doc(db, "responses", id));
+
+    const data = snap.data();
+
+    alert(
+`Candidate : ${data.candidate}
+
+Score : ${data.score}
+
+Correct : ${data.correct}
+
+Wrong : ${data.wrong}
+
+Not Attempted : ${data.notAttempted}`
+    );
 
 }
