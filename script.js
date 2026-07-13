@@ -301,6 +301,9 @@ catch(error){
 
 }
 
+
+
+    }
 document.querySelector(".submit").addEventListener("click", showSummary);
 
 function showSummary(){
@@ -336,8 +339,6 @@ function showSummary(){
 
         }
 
-    }
-
     let message =
 `📋 TEST SUMMARY
 
@@ -358,4 +359,4 @@ Submit the test?`;
         submitExam();
 
     }
-}};
+}}
